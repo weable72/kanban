@@ -41,8 +41,16 @@ async function handleEmailAction() {
     if (error) showError(error.message);
     else       showError('이메일을 확인해 계정을 인증해 주세요.', false);
   } else {
-    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-    if (error) showError(error.message);
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      showError(error.message);
+    } else {
+      showBoard(data.session.user);
+      if (!boardInitialized && typeof initBoard === 'function') {
+        initBoard();
+        boardInitialized = true;
+      }
+    }
   }
 }
 
@@ -70,14 +78,14 @@ function toggleMode() {
 }
 
 function showBoard(user) {
-  document.getElementById('auth-section').hidden  = true;
-  document.getElementById('board-section').hidden = false;
+  document.getElementById('auth-section').style.display  = 'none';
+  document.getElementById('board-section').style.display = 'block';
   document.getElementById('user-email-display').textContent = user.email ?? '';
 }
 
 function showAuth() {
-  document.getElementById('board-section').hidden = true;
-  document.getElementById('auth-section').hidden  = false;
+  document.getElementById('board-section').style.display = 'none';
+  document.getElementById('auth-section').style.display  = 'flex';
 }
 
 function showError(msg, isErr = true) {
