@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="auth.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- 인증 섹션 (비로그인 시 노출) -->
+  <section id="auth-section">
+    <div id="auth-box">
+      <h2 id="auth-title">로그인</h2>
+      <input type="email"    id="auth-email"    placeholder="이메일" autocomplete="email" />
+      <input type="password" id="auth-password" placeholder="비밀번호" autocomplete="current-password" />
+      <div id="auth-error" class="auth-error" hidden></div>
+      <button id="btn-email-action">로그인</button>
+      <button id="btn-google">Google로 로그인</button>
+      <p class="auth-toggle">
+        계정이 없으신가요? <a href="#" id="link-toggle">회원가입</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- 보드 섹션 (로그인 후 노출) -->
+  <section id="board-section" hidden>
+    <header>
+      <h1>Kanban Board</h1>
+      <div class="header-right">
+        <span id="user-email-display"></span>
+        <button id="btn-logout">로그아웃</button>
+      </div>
+    </header>
+
+    <main class="board">
+      <!-- To-Do -->
+      <section class="column" data-column="todo">
+        <div class="column-header">
+          <span class="column-title">To-Do</span>
+          <span class="card-count">0</span>
+        </div>
+        <div class="card-list" data-column="todo">
+          <div class="card" draggable="true">
+            <p>요구사항 분석</p>
+          </div>
+          <div class="card" draggable="true">
+            <p>디자인 시안 검토</p>
+          </div>
+          <div class="card" draggable="true">
+            <p>DB 스키마 설계</p>
+          </div>
+        </div>
+        <button class="add-card-btn" data-column="todo">+ 카드 추가</button>
+      </section>
+
+      <!-- In Progress -->
+      <section class="column" data-column="inprogress">
+        <div class="column-header">
+          <span class="column-title">In Progress</span>
+          <span class="card-count">0</span>
+        </div>
+        <div class="card-list" data-column="inprogress">
+          <div class="card" draggable="true">
+            <p>API 개발</p>
+          </div>
+          <div class="card" draggable="true">
+            <p>프론트엔드 구현</p>
+          </div>
+        </div>
+        <button class="add-card-btn" data-column="inprogress">+ 카드 추가</button>
+      </section>
+
+      <!-- Done -->
+      <section class="column" data-column="done">
+        <div class="column-header">
+          <span class="column-title">Done</span>
+          <span class="card-count">0</span>
+        </div>
+        <div class="card-list" data-column="done">
+          <div class="card" draggable="true">
+            <p>프로젝트 킥오프</p>
+          </div>
+        </div>
+        <button class="add-card-btn" data-column="done">+ 카드 추가</button>
+      </section>
+    </main>
+
+    <!-- 카드 추가 모달 -->
+    <div class="modal-overlay" id="modal">
+      <div class="modal">
+        <h2>새 카드 추가</h2>
+        <textarea id="card-input" placeholder="할 일을 입력하세요..." rows="3"></textarea>
+        <div class="modal-actions">
+          <button id="modal-cancel">취소</button>
+          <button id="modal-add">추가</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
