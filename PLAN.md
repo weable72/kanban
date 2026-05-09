@@ -328,3 +328,4 @@ header { display: flex; align-items: center; justify-content: space-between; }
 4. 로그아웃 → 로그인 화면 복귀 확인
 5. Google 로그인 버튼 → OAuth 플로우 → 보드 표시 확인
 6. 로컬 개발 시: `config.js` 직접 생성 후 `index.html`을 브라우저로 열기
+
