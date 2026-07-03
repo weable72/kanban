@@ -11,7 +11,11 @@ async function signInWithEmail(email, password) {
 }
 
 async function signInWithOAuth(provider) {
-  return supabaseClient.auth.signInWithOAuth({ provider });
+  // redirectTo를 명시하지 않으면 Supabase가 대시보드의 Site URL로 돌려보낸다.
+  // GitHub Pages 프로젝트 사이트(https://weable72.github.io/kanban/)처럼 하위 경로를 쓰는 경우
+  // Site URL 설정과 무관하게 항상 "현재 페이지"로 돌아오도록 명시적으로 지정한다.
+  const redirectTo = window.location.origin + window.location.pathname;
+  return supabaseClient.auth.signInWithOAuth({ provider, options: { redirectTo } });
 }
 
 async function signOut() {
