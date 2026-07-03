@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab active" data-mode="login">로그인</button>
+        <button type="button" class="auth-tab" data-mode="signup">회원가입</button>
+      </div>
+
+      <form id="auth-form" class="auth-form" novalidate>
+        <label class="sr-only" for="auth-email">이메일</label>
+        <input
+          type="email"
+          id="auth-email"
+          class="auth-input"
+          placeholder="이메일"
+          autocomplete="email"
+          required
+        />
+
+        <label class="sr-only" for="auth-password">비밀번호</label>
+        <input
+          type="password"
+          id="auth-password"
+          class="auth-input"
+          placeholder="비밀번호"
+          autocomplete="current-password"
+          minlength="6"
+          required
+        />
+
+        <button type="submit" class="btn btn-primary auth-submit">로그인</button>
+        <p id="auth-error" class="auth-error" role="alert"></p>
+      </form>
+
+      <div class="auth-divider"><span>또는</span></div>
+
+      <button type="button" class="btn btn-oauth btn-google" data-provider="google">
+        Google로 로그인
+      </button>
+      <button type="button" class="btn btn-oauth btn-github" data-provider="github">
+        GitHub로 로그인
+      </button>
+    </div>
+  </section>
+
+  <div id="board-screen" class="hidden">
+    <header class="app-header">
+      <h1>Kanban Board</h1>
+      <div class="user-info">
+        <span id="user-email" class="user-email"></span>
+        <button type="button" id="logout-btn" class="btn btn-edit">로그아웃</button>
+      </div>
+    </header>
+
+    <main class="board">
+    <section class="column column--todo" data-column="todo">
+      <header class="column-header">
+        <h2 class="column-title">To-Do</h2>
+        <span class="card-count" data-count="todo">0</span>
+      </header>
+      <ul class="card-list" data-column="todo"></ul>
+      <form class="add-card-form" data-column="todo">
+        <label class="sr-only" for="add-todo-input">To-Do 컬럼에 카드 추가</label>
+        <input
+          type="text"
+          id="add-todo-input"
+          class="add-card-input"
+          placeholder="카드 제목 입력"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-primary">카드 추가</button>
+      </form>
+    </section>
+
+    <section class="column column--in-progress" data-column="inProgress">
+      <header class="column-header">
+        <h2 class="column-title">In-Progress</h2>
+        <span class="card-count" data-count="inProgress">0</span>
+      </header>
+      <ul class="card-list" data-column="inProgress"></ul>
+      <form class="add-card-form" data-column="inProgress">
+        <label class="sr-only" for="add-inprogress-input">In-Progress 컬럼에 카드 추가</label>
+        <input
+          type="text"
+          id="add-inprogress-input"
+          class="add-card-input"
+          placeholder="카드 제목 입력"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-primary">카드 추가</button>
+      </form>
+    </section>
+
+    <section class="column column--done" data-column="done">
+      <header class="column-header">
+        <h2 class="column-title">Done</h2>
+        <span class="card-count" data-count="done">0</span>
+      </header>
+      <ul class="card-list" data-column="done"></ul>
+      <form class="add-card-form" data-column="done">
+        <label class="sr-only" for="add-done-input">Done 컬럼에 카드 추가</label>
+        <input
+          type="text"
+          id="add-done-input"
+          class="add-card-input"
+          placeholder="카드 제목 입력"
+          autocomplete="off"
+        />
+        <button type="submit" class="btn btn-primary">카드 추가</button>
+      </form>
+    </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabaseClient.js"></script>
+  <script src="board.js"></script>
+  <script src="auth.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
